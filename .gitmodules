@@ -3,4 +3,4 @@
 	url = https://github.com/LNMMusic/backend-python.git
 [submodule "frontend"]
 	path = frontend
-	url = https://github.com/LNMMusic/frontend-python.git
+	url = https://github.com/LNMMusic/frontend-react.git
