@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  db:
+    container_name: db_mysql
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DBSQL_PSWD}
+      - MYSQL_DATABASE=${DBSQL_NAME}
+    healthcheck:
+      test: "exit 0"
+    volumes:
+      - volume_mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  
+  backend:
+    container_name: backend_python
+    image: backend-python:v1
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    restart: always
+    command: ["python", "main.py"]
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  frontend:
+    container_name: frontend_react
+    image: frontend-react:v1
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile
+    restart: always
+    command: ["npm", "start"]
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      - "3000:3000"
+
+volumes:
+  volume_mysql:

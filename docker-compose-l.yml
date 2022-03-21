@@ -1,0 +1,64 @@
+version: '2.4'
+
+services:
+  db:
+    container_name: db_mysql
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DBSQL_PSWD}
+      - MYSQL_DATABASE=${DBSQL_NAME}
+    healthcheck:
+      test: "exit 0"
+    volumes:
+      - volume_mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      backend_net:
+        ipv4_address: 192.168.0.2
+
+  backend:
+    container_name: backend_python
+    image: backend-python
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    restart: always
+    command: ["python", "main.py"]
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    networks:
+      backend_net:
+        ipv4_address: 192.168.0.3
+
+  frontend:
+    container_name: frontend_react
+    image: frontend-react
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile
+    restart: always
+    command: ["npm", "start"]
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      - "3000:3000"
+    networks:
+      backend_net:
+        ipv4_address: 192.168.0.4
+
+volumes:
+  volume_mysql:
+
+networks:
+  backend_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.0.0/24"
+          gateway: 192.168.0.1
