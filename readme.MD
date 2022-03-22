@@ -32,3 +32,9 @@ The driver was 'mysql-connnector-python' and it doesn't need to have installed a
 
     - 3.0: use mask                 ->  example: http://service-name:PORT
     - 2.0: use manual network       ->  example: http://192.168.0.##:PORT
+
+<br>
+<br>
+
+## ---
+## Upcoming Updates
