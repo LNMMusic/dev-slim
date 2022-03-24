@@ -40,8 +40,11 @@ ___
 **Production**
 Same for Mysql and Backend
 - Frontend: "npm run build"
-            "npm install -g serve --save"
+            "npm install -g serve"
             "npm -s build"
+
+Other options to no serve it in an static server could be using an express server to load the static files with NodeJS or other programming languages like Rust, Golang.
+https://create-react-app.dev/docs/deployment/
 
 **Set-Up**
 - Backend:  "alembic revision --autogenerate -m "first""
