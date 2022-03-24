@@ -2,7 +2,7 @@
 This is to set up the packages used on the enviroment
 
 **Database**
-- Install mysql
+- Install mysql [user can be root]
 
 **Backend**
 - Run "python -m venv venv"
