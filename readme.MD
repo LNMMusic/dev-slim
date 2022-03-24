@@ -9,32 +9,20 @@ This case is being used a docker version of Mask (not manual networking, instead
     ∟ Local:    http://localhost:8080
     ∟ Docker:   http://backend:8080
 
-
 <br>
 <br>
 
 ## MODE RUN
+**Development**
 - Run docker-compose --env-file ./docker.env up
 
-**First Migration**
-- Run docker exec -it #backend-python-container /bin/bash
-- Run alembic revision --autogenerate -m "first"
-- Run alembic upgrade head
+**Production**
+- Run docker-compose -f docker-compose.prod.yml --env-file ./docker.env up
 
-This is a one time run command, then mysql db has data consistency which means tables remain
 
-## NOTES
-1. There was a change on the driver to handle mysql for python (mysqllibrary wasn't working properly)
-The solution was using another driver which much more compatibility with Debian System on FastAPI Python's Docker
-The driver was 'mysql-connnector-python' and it doesn't need to have installed any external software
+**Set-Up**
+- Run docker exec -it *ID-backend-python-container* /bin/bash [this command access to the subsystem where python runs]
+- Run alembic revision --autogenerate -m "first"              [this command creates a driver on mysql to handle migrations]
+- Run alembic upgrade head                                    [this command creates the tables based on the python models]
 
-2. Docker Compose Versions
-
-    - 3.0: use mask                 ->  example: http://service-name:PORT
-    - 2.0: use manual network       ->  example: http://192.168.0.##:PORT
-
-<br>
-<br>
-
-## ---
-## Upcoming Updates
+NOTE: The *set-up* should be run one time, due to mysql has data consistency based on remaning data on a volume [docker-memory]
