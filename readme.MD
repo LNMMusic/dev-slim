@@ -1,6 +1,9 @@
 ## MODE SWITCH [Local - Docker]
 This case is being used a docker version of Mask (not manual networking, instead name of each service as host)
 
+**Database**
+- Check mysql not open while using docker [both use the same port, this could be fix using mysql image on other port]
+
 **Backend**
 - Check env.env file
 
